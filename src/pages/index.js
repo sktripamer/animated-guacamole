@@ -76,8 +76,9 @@ const App = () => (
     <CheckoutForm />
   </Elements>
 );
-
+if (typeof window !== 'undefined') {
 ReactDOM.render(<App />, document.body);
+}
 
 
 // import React from "react"
