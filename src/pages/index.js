@@ -57,7 +57,7 @@ const CheckoutForm = () => {
     payment_method: {
       card: elements.getElement(CardElement),
       billing_details: {
-        email: profile.email,
+        email: "coolio123@gmail.com",
       },
     },
   }); 
