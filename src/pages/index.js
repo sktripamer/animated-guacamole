@@ -34,7 +34,7 @@ const CheckoutForm = () => {
     // });
 
     const intent = () => { 
-      await fetch(`/api/payment-intent`, {
+      fetch(`/api/payment-intent`, {
       method: "POST",
       body: JSON.stringify({
           amount: 500,
