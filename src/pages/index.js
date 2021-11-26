@@ -45,7 +45,7 @@ const CheckoutForm = () => {
       })
       .then(res => res.json())
       .then(body => {
-        console.log(`response from API:`, body.client_secret)
+        console.log(body)
         stripe.confirmCardPayment(body.client_secret, {
           payment_method: {
             card: elements.getElement(CardElement),
