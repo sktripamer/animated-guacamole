@@ -14,6 +14,11 @@ const CheckoutForm = () => {
 
   // we will edit this
   const handleSubmit = async (event) => {
+    event.preventDefault();
+    const {error, paymentMethod} = await stripe.createPaymentMethod({
+      type: 'card',
+      card: elements.getElement(CardElement),
+    });
 
     const intent = await fetch(`/api/payment-intent`, {
       method: "POST",
@@ -23,25 +28,32 @@ const CheckoutForm = () => {
       });
     const { paymentIntent } = await intent.json();
 
-    await stripe.confirmCardPayment(paymentIntent.client_secret, {
-      payment_method: {
-        card: elements.getElement(CardElement),
-        billing_details: {
-          email: profile.email,
-        },
-      },
-    });
 
-    event.preventDefault();
-    const {error, paymentMethod} = await stripe.createPaymentMethod({
-      type: 'card',
+    
+  await stripe.confirmCardPayment(paymentIntent.client_secret, {
+    payment_method: {
       card: elements.getElement(CardElement),
-    });
-
-
-
+      billing_details: {
+        email: profile.email,
+      },
+    },
+  }); 
   };
 
+
+//   const onSubmit = data => {
+//     fetch(`/api/form`, {
+//       method: `POST`,
+//       body: JSON.stringify(data),
+//       headers: {
+//         "content-type": `application/json`,
+//       },
+//     })
+//       .then(res => res.json())
+//       .then(body => {
+//         console.log(`response from API:`, body)
+//       })
+//   }
 
 // handleSubmit()
 
