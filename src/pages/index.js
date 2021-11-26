@@ -50,7 +50,7 @@ const CheckoutForm = () => {
     // }
 
     const { paymentIntent } = await intent.json();
-    console.log(await intent.json());
+    //console.log(await intent.json());
 
     
   await stripe.confirmCardPayment(paymentIntent.client_secret, {
