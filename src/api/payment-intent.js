@@ -10,7 +10,7 @@ try {
     currency: 'usd',
   });
 
-  res.status(200).json({body:paymentIntent})
+  res.status(200).json(paymentIntent)
 } catch (e) {
   res.json({body: 'error ' + e})
 }
