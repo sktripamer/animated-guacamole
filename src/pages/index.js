@@ -33,7 +33,7 @@ const CheckoutForm = () => {
     //    },
     // });
 
-    const intent = () => { 
+
       fetch(`/api/payment-intent`, {
       method: "POST",
       body: JSON.stringify({
@@ -46,22 +46,23 @@ const CheckoutForm = () => {
       .then(res => res.json())
       .then(body => {
         console.log(`response from API:`, body)
+        stripe.confirmCardPayment(body.client_secret, {
+          payment_method: {
+            card: elements.getElement(CardElement),
+            billing_details: {
+              email: "coolio123@gmail.com",
+            },
+          },
+        });
       })
-    }
+    
 
-    const { paymentIntent } = await intent.json();
-    console.log(paymentIntent)
-    // console.log(await intent.json());
+    // const { paymentIntent } = await intent.json();
+    // console.log(paymentIntent)
+
 
     
-  await stripe.confirmCardPayment(paymentIntent.client_secret, {
-    payment_method: {
-      card: elements.getElement(CardElement),
-      billing_details: {
-        email: "coolio123@gmail.com",
-      },
-    },
-  }); 
+ 
   };
 
 
