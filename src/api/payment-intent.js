@@ -1,6 +1,9 @@
 const stripe = require("stripe")(process.env.STRIPE_SECRET);
-const { amount, currency = "usd" } = JSON.parse(event.body);
-(async () => {
+
+
+ export default async function handler(body, res) {
+const { amount, currency = "usd" } = JSON.parse(body);
+
 try {
   const paymentIntent = await stripe.paymentIntents.create({
     amount,
@@ -11,4 +14,5 @@ try {
 } catch (e) {
   res.json({body: 'error ' + e})
 }
-})()
+
+}
