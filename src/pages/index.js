@@ -23,34 +23,35 @@ const CheckoutForm = () => {
       card: elements.getElement(CardElement),
     });
 
-    const intent = await fetch(`/api/payment-intent`, {
-      method: "POST",
-      body: JSON.stringify({
-        amount: 500,
-      }),
-      headers: {
-        "content-type": `application/json`,
-       },
-    });
-
-    // const intent = data => { 
-    //   await fetch(`/api/payment-intent`, {
+    // const intent = await fetch(`/api/payment-intent`, {
     //   method: "POST",
     //   body: JSON.stringify({
-    //       amount: 500,
-    //     }),
+    //     amount: 500,
+    //   }),
     //   headers: {
-    //       "content-type": `application/json`,
-    //      },
-    //   })
-    //   .then(res => res.json())
-    //   .then(body => {
-    //     console.log(`response from API:`, body)
-    //   })
-    // }
+    //     "content-type": `application/json`,
+    //    },
+    // });
+
+    const intent = () => { 
+      await fetch(`/api/payment-intent`, {
+      method: "POST",
+      body: JSON.stringify({
+          amount: 500,
+        }),
+      headers: {
+          "content-type": `application/json`,
+         },
+      })
+      .then(res => res.json())
+      .then(body => {
+        console.log(`response from API:`, body)
+      })
+    }
 
     const { paymentIntent } = await intent.json();
     console.log(paymentIntent)
+    // console.log(await intent.json());
 
     
   await stripe.confirmCardPayment(paymentIntent.client_secret, {
