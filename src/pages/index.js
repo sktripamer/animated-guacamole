@@ -7,7 +7,7 @@ import {
   useStripe,
   useElements,
 } from '@stripe/react-stripe-js';
-import CheckoutForm from "./stripeCheckoutForm";
+import CheckoutForm from "../components/stripeCheckoutForm";
 
 export default function App() {
 
