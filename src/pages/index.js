@@ -7,100 +7,102 @@ import {
   useStripe,
   useElements,
 } from '@stripe/react-stripe-js';
-
+import CheckoutForm from "./stripeCheckoutForm";
 
 export default function App() {
 
-const CheckoutForm = () => {
-  const stripe = useStripe();
-  const elements = useElements();
+// const CheckoutForm = () => {
+//   const stripe = useStripe();
+//   const elements = useElements();
 
-  // we will edit this
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-    const {error, paymentMethod} = await stripe.createPaymentMethod({
-      type: 'card',
-      card: elements.getElement(CardElement),
-    });
+//   // we will edit this
+//   const handleSubmit = async (event) => {
+//     event.preventDefault();
+//     const {error, paymentMethod} = await stripe.createPaymentMethod({
+//       type: 'card',
+//       card: elements.getElement(CardElement),
+//     });
 
-    // const intent = await fetch(`/api/payment-intent`, {
-    //   method: "POST",
-    //   body: JSON.stringify({
-    //     amount: 500,
-    //   }),
-    //   headers: {
-    //     "content-type": `application/json`,
-    //    },
-    // });
+//     // const intent = await fetch(`/api/payment-intent`, {
+//     //   method: "POST",
+//     //   body: JSON.stringify({
+//     //     amount: 500,
+//     //   }),
+//     //   headers: {
+//     //     "content-type": `application/json`,
+//     //    },
+//     // });
 
 
-      fetch(`/api/payment-intent`, {
-      method: "POST",
-      body: JSON.stringify({
-          amount: 500,
-        }),
-      headers: {
-          "content-type": `application/json`,
-         },
-      })
-      .then(res => res.json())
-      .then(body => {
-        console.log(body.body)
-        stripe.confirmCardPayment(body.body.client_secret, {
-          payment_method: {
-            card: elements.getElement(CardElement),
-            billing_details: {
-              email: "coolio123@gmail.com",
-            },
-          },
-        });
-      })
+//       fetch(`/api/payment-intent`, {
+//       method: "POST",
+//       body: JSON.stringify({
+//           amount: 500,
+//         }),
+//       headers: {
+//           "content-type": `application/json`,
+//          },
+//       })
+//       .then(res => res.json())
+//       .then(body => {
+//         console.log(body)
+//         stripe.confirmCardPayment(body.body.client_secret, {
+//           payment_method: {
+//             card: elements.getElement(CardElement),
+//             billing_details: {
+//               email: "coolio123@gmail.com",
+//             },
+//           },
+//         });
+//       })
     
 
-    // const { paymentIntent } = await intent.json();
-    // console.log(paymentIntent)
+//     // const { paymentIntent } = await intent.json();
+//     // console.log(paymentIntent)
 
 
     
  
-  };
+//   };
 
 
-  // const onSubmit = data => {
-  //   fetch(`/api/form`, {
-  //     method: `POST`,
-  //     body: JSON.stringify(data),
-  //     headers: {
-  //       "content-type": `application/json`,
-  //     },
-  //   })
-  //     .then(res => res.json())
-  //     .then(body => {
-  //       console.log(`response from API:`, body)
-  //     })
-  // }
+//   // const onSubmit = data => {
+//   //   fetch(`/api/form`, {
+//   //     method: `POST`,
+//   //     body: JSON.stringify(data),
+//   //     headers: {
+//   //       "content-type": `application/json`,
+//   //     },
+//   //   })
+//   //     .then(res => res.json())
+//   //     .then(body => {
+//   //       console.log(`response from API:`, body)
+//   //     })
+//   // }
 
-// handleSubmit()
+// // handleSubmit()
 
 
 
-  return (
-    <form onSubmit={handleSubmit}>
-      <CardElement /> 
-      <button type="submit" disabled={!stripe}>
-        Pay
-      </button>
-    </form>
-  );
-};
+//   return (
+//     <form onSubmit={handleSubmit}>
+//       <CardElement /> 
+//       <button type="submit" disabled={!stripe}>
+//         Pay
+//       </button>
+//     </form>
+//   );
+// };
 
-const stripePromise = loadStripe('pk_test_51Jr6IuEIi9OXKxaBdi4aBOlRU6DgoMcQQNgDCOLo1p8TZDy29xR5tKWHP5C02bF7kKHpkWKq9DI9OCzClVtj8zi500XedIOBD3');
+const promise = loadStripe('pk_test_51Jr6IuEIi9OXKxaBdi4aBOlRU6DgoMcQQNgDCOLo1p8TZDy29xR5tKWHP5C02bF7kKHpkWKq9DI9OCzClVtj8zi500XedIOBD3');
 
 return (
-  <Elements stripe={stripePromise}>
-    <CheckoutForm />
-  </Elements>
-)
+  <div className="App">
+    <Elements stripe={promise}>
+      <CheckoutForm />
+    </Elements>
+  </div>
+);
 
 }
 
