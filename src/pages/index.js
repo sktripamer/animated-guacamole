@@ -8,7 +8,7 @@ import {
   useElements,
 } from '@stripe/react-stripe-js';
 import CheckoutForm from "../components/stripeCheckoutForm";
-
+import "../components/style.css"
 export default function App() {
 
 // const CheckoutForm = () => {
@@ -34,27 +34,27 @@ export default function App() {
 //     // });
 
 
-//       fetch(`/api/payment-intent`, {
-//       method: "POST",
-//       body: JSON.stringify({
-//           amount: 500,
-//         }),
-//       headers: {
-//           "content-type": `application/json`,
-//          },
-//       })
-//       .then(res => res.json())
-//       .then(body => {
-//         console.log(body)
-//         stripe.confirmCardPayment(body.body.client_secret, {
-//           payment_method: {
-//             card: elements.getElement(CardElement),
-//             billing_details: {
-//               email: "coolio123@gmail.com",
-//             },
-//           },
-//         });
-//       })
+      // fetch(`/api/payment-intent`, {
+      // method: "POST",
+      // body: JSON.stringify({
+      //     amount: 500,
+      //   }),
+      // headers: {
+      //     "content-type": `application/json`,
+      //    },
+      // })
+      // .then(res => res.json())
+      // .then(body => {
+      //   console.log(body)
+      //   stripe.confirmCardPayment(body.body.client_secret, {
+      //     payment_method: {
+      //       card: elements.getElement(CardElement),
+      //       billing_details: {
+      //         email: "coolio123@gmail.com",
+      //       },
+      //     },
+      //   });
+      // })
     
 
 //     // const { paymentIntent } = await intent.json();
