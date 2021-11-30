@@ -24,10 +24,34 @@ export default function CheckoutForm() {
       .then((res) => {
         return res.json();
       })
-      .then((data) => {
-        setClientSecret(data.clientSecret);
+      .then((body) => {
+        console.log(body)
+        setClientSecret(body.body.client_secret);
       });
   }, []);
+
+
+  // fetch(`/api/payment-intent`, {
+  //   method: "POST",
+  //   body: JSON.stringify({
+  //       amount: 500,
+  //     }),
+  //   headers: {
+  //       "content-type": `application/json`,
+  //      },
+  //   })
+  //   .then(res => res.json())
+  //   .then(body => {
+  //     console.log(body)
+  //     stripe.confirmCardPayment(body.body.client_secret, {
+  //       payment_method: {
+  //         card: elements.getElement(CardElement),
+  //         billing_details: {
+  //           email: "coolio123@gmail.com",
+  //         },
+  //       },
+  //     });
+  //   })
 
   const cardStyle = {
     style: {
