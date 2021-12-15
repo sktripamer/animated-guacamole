@@ -1,16 +1,16 @@
 const stripe = require("stripe")(process.env.STRIPE_SECRET);
 
 export default async function handler(res) {
-    if (!event.body) {
-      res.json({body: 'error invalid body'})
-    }
-    const body = JSON.parse(event.body);
-    const { email } = body;
+    // if (!event.body) {
+    //   res.json({body: 'error invalid body'})
+    // }
+    // const body = JSON.parse(event.body);
+    // const { email } = body;
     
-    if (!email) {
-      res.json({body: 'error no email'})
-      return;
-    }
+    // if (!email) {
+    //   res.json({body: 'error no email'})
+    //   return;
+    // }
 
     try {
       // Create a new customer
