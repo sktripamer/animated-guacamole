@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
+
 
 export default function CustomerForm() {
   const [succeeded, setSucceeded] = useState(false);
@@ -7,8 +7,7 @@ export default function CustomerForm() {
   const [processing, setProcessing] = useState("");
   const [disabled, setDisabled] = useState(true);
   //const [clientSecret, setClientSecret] = useState("");
-  const stripe = useStripe();
-  const elements = useElements();
+
 
 //   useEffect(() => {
 //     window
