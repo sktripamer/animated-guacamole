@@ -100,9 +100,9 @@ const promise = loadStripe('pk_test_51Jr6IuEIi9OXKxaBdi4aBOlRU6DgoMcQQNgDCOLo1p8
 return (
   <div className="App">
      <CustomerForm />
-    {/* <Elements stripe={promise}>
+    <Elements stripe={promise}>
       <CheckoutForm />
-    </Elements> */}
+    </Elements>
   </div>
 );
 
