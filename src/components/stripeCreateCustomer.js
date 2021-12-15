@@ -113,7 +113,8 @@ export default function CustomerForm() {
     try {
       // Retrieve email and username of the currently logged in user.
       // getUserFromDB() is *your* implemention of getting user info from the DB
-      const email = "sktripam.er@gmail.com"
+          const form = nameForm.current
+        const email = form['firstname'].value
       if (!email) {
         throw Error('Email or username not found.');
       }
