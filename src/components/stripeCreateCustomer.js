@@ -93,7 +93,7 @@ export default function CustomerForm() {
     //       email
     //     }),
     //   });
-    const customer = await this.createCustomer();
+    const customer = await createCustomer();
     console.log(customer?.id);
     // const customer = (await request.json())
     // console.log(customer)
