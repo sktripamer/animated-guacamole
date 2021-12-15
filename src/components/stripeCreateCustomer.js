@@ -83,11 +83,11 @@ export default function CustomerForm() {
     setProcessing(true);
 
     const form = nameForm.current
-    const inputValue = form['firstname'].value
+    const email = form['firstname'].value
     const request = await fetch("/api/create-customer", {
         method: 'POST',
         body: JSON.stringify({
-          inputValue
+          email
         }),
       });
 
