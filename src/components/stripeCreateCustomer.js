@@ -6,6 +6,8 @@ export default function CustomerForm() {
   const [error, setError] = useState(null);
   const [processing, setProcessing] = useState("");
   const [disabled, setDisabled] = useState(true);
+  const [email, setEmail] = useState("");
+  const nameForm = useRef(null);
   //const [clientSecret, setClientSecret] = useState("");
 
 
@@ -80,9 +82,8 @@ export default function CustomerForm() {
     ev.preventDefault();
     setProcessing(true);
 
-    const input = this.refs.myInput;
-    const inputValue = input.value;
-
+    const form = nameForm.current
+    const inputValue = form['firstname'].value
     const request = await fetch("/api/create-customer", {
         method: 'POST',
         body: JSON.stringify({
@@ -105,9 +106,9 @@ export default function CustomerForm() {
   };
 
   return (
-    <form id="customer-form" onSubmit={handleSubmit}>
-      <input type="text" ref="myInput" />
-      <button disabled={processing || disabled || succeeded} id="submit">
+    <form id="customer-form" ref={nameForm} onSubmit={handleSubmit}>
+      <InputField label={'email'} name={'firstname'}/>
+      <button id="submit">
         <span id="button-text">
           {processing ? (
             <div className="spinner" id="spinner"></div>
