@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-
+import InputField from './inputfield';
 
 export default function CustomerForm() {
   const [succeeded, setSucceeded] = useState(false);
