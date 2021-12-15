@@ -15,7 +15,7 @@ export default async function handler(res) {
     try {
       // Create a new customer
       const customer = await stripe.customers.create({
-        email
+        email: "skt.ripamer@gmail.com"
       });
       res.status(200).json({body:customer})
 
