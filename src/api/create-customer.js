@@ -1,6 +1,6 @@
 const stripe = require("stripe")(process.env.STRIPE_SECRET);
 
-export default async function handler(res) {
+export default async function handler(req, res) {
     // if (!event.body) {
     //   res.json({body: 'error invalid body'})
     // }
@@ -15,7 +15,7 @@ export default async function handler(res) {
     try {
       // Create a new customer
       const customer = await stripe.customers.create({
-        email: "skt.r.i.pamer+1@gmail.com"
+        email: "skt.r.i.pamer@gmail.com"
       });
      return res.status(200).json({customer})
 
