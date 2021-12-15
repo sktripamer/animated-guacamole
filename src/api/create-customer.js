@@ -1,6 +1,6 @@
 const stripe = require("stripe")(process.env.STRIPE_SECRET);
 
-export default async function handler(body, res) {
+export default async function handler(res) {
     if (!event.body) {
       res.json({body: 'error invalid body'})
     }
