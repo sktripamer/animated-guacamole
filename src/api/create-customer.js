@@ -15,12 +15,12 @@ export default async function handler(res) {
     try {
       // Create a new customer
       const customer = await stripe.customers.create({
-        email: "skt.r.i.pa.m.er@gmail.com"
+        email: "skt.r.i.pamer@gmail.com"
       });
-      res.status(200).json({body:customer})
+     return res.status(200).json({customer})
 
     } catch (error) {
-      res.json({body: 'error ' + error})
+      return res.status(500).json({ error: "oops" })
     }
     
 }
