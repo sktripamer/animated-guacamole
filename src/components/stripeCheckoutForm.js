@@ -10,26 +10,46 @@ export default function CheckoutForm() {
   const stripe = useStripe();
   const elements = useElements();
 
-  useEffect(() => {
-    window
-      .fetch("/api/payment-intent", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-             amount: 500,
-        }),
-      })
-      .then((res) => {
-        return res.json();
-      })
-      .then((body) => {
-        console.log(body)
-        setClientSecret(body.body.client_secret);
-      });
-  }, []);
+  // useEffect(() => {
+  //   window
+  //     .fetch("/api/payment-intent", {
+  //       method: "POST",
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //       },
+  //       body: JSON.stringify({
+  //            amount: 500,
+  //       }),
+  //     })
+  //     .then((res) => {
+  //       return res.json();
+  //     })
+  //     .then((body) => {
+  //       console.log(body)
+  //       setClientSecret(body.body.client_secret);
+  //     });
+  // }, []);
+  async function createIntent() {
+    try {
+      // Retrieve email and username of the currently logged in user.
+      // getUserFromDB() is *your* implemention of getting user info from the DB
 
+      const request = await fetch('/api/payment-intent', {
+        method: 'POST',
+        body: JSON.stringify({
+          amount: 500,
+        }),
+      });
+      const intent = (await request.json());
+      // Update your user in DB to store the customerID
+      // updateUserInDB() is *your* implementation of updating a user in the DB
+      return intent;
+    } catch (error) {
+      console.log('Failed to create intent');
+      console.log(error);
+      return null;
+    }
+  }
 
   // fetch(`/api/payment-intent`, {
   //   method: "POST",
@@ -79,7 +99,8 @@ export default function CheckoutForm() {
   const handleSubmit = async (ev) => {
     ev.preventDefault();
     setProcessing(true);
-
+    const intent = await createIntent();
+    setClientSecret(intent.body.client_secret);
     const payload = await stripe.confirmCardPayment(clientSecret, {
       payment_method: {
         card: elements.getElement(CardElement),
