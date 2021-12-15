@@ -119,9 +119,9 @@ export default function CustomerForm() {
       }
       const request = await fetch('/api/create-customer', {
         method: 'POST',
-        body: JSON.stringify({
-          email
-        }),
+        // body: JSON.stringify({
+        //   email
+        // }),
       });
       const customer = (await request.json());
       // Update your user in DB to store the customerID
