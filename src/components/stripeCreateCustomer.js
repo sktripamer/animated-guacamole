@@ -1,34 +1,34 @@
-import React, { useState, useEffect } from "react";
-import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
+import React, { useState, useEffect, useRef } from "react";
+import InputField from './inputfield';
 
-export default function CheckoutForm() {
+export default function CustomerForm() {
   const [succeeded, setSucceeded] = useState(false);
   const [error, setError] = useState(null);
   const [processing, setProcessing] = useState("");
   const [disabled, setDisabled] = useState(true);
-  const [clientSecret, setClientSecret] = useState("");
-  const stripe = useStripe();
-  const elements = useElements();
+  const [email, setEmail] = useState("");
+  const nameForm = useRef(null);
+  //const [clientSecret, setClientSecret] = useState("");
 
-  useEffect(() => {
-    window
-      .fetch("/api/payment-intent", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-             amount: 500,
-        }),
-      })
-      .then((res) => {
-        return res.json();
-      })
-      .then((body) => {
-        console.log(body)
-        setClientSecret(body.body.client_secret);
-      });
-  }, []);
+
+//   useEffect(() => {
+//     window
+//       .fetch("/api/create-customer", {
+//         method: "POST",
+//         headers: {
+//           "Content-Type": "application/json",
+//         },
+//         body: JSON.stringify({
+//              amount: 500,
+//         }),
+//       })
+//       .then((res) => {
+//         return res.json();
+//       })
+//       .then((body) => {
+//         console.log(body)
+//       });
+//   }, []);
 
 
   // fetch(`/api/payment-intent`, {
@@ -77,38 +77,46 @@ export default function CheckoutForm() {
   };
 
   const handleSubmit = async (ev) => {
+    try {
+
     ev.preventDefault();
     setProcessing(true);
 
-    const payload = await stripe.confirmCardPayment(clientSecret, {
-      payment_method: {
-        card: elements.getElement(CardElement),
-      },
-    });
+    const form = nameForm.current
+    const email = form['firstname'].value
+    const request = await fetch("/api/create-customer", {
+        method: 'POST',
+        headers: {
+            "Content-Type": "application/json",
+          },
+        body: JSON.stringify({
+          email
+        }),
+      });
 
-    if (payload.error) {
-      setError(`Payment failed ${payload.error.message}`);
-      setProcessing(false);
-    } else {
-      setError(null);
-      setProcessing(false);
-      setSucceeded(true);
+    const customer = (await request.json())
+    console.log(customer)
+    setError(null);
+    setProcessing(false);
+    setSucceeded(true);
+    } catch (error){
+    console.log('Failed to create customer');
+    console.log(error);
+    setProcessing(false);
+    setError(error);
     }
+
   };
 
   return (
-    <form id="payment-form" onSubmit={handleSubmit}>
-      <CardElement
-        id="card-element"
-        options={cardStyle}
-        onChange={handleChange}
-      />
-      <button disabled={processing || disabled || succeeded} id="submit">
+    <form id="customer-form" ref={nameForm} onSubmit={handleSubmit}>
+      <InputField label={'email'} name={'firstname'}/>
+      <button id="submit">
         <span id="button-text">
           {processing ? (
             <div className="spinner" id="spinner"></div>
           ) : (
-            "Pay now"
+            "Create Customer"
           )}
         </span>
       </button>
@@ -118,7 +126,7 @@ export default function CheckoutForm() {
         </div>
       )}
       <p className={succeeded ? "result-message" : "result-message hidden"}>
-        Payment succeeded, see the result in your
+        Customer creation succeeded, see the result in your
         <a href={`https://dashboard.stripe.com/test/payments`}>
           Stripe dashboard.
         </a>
