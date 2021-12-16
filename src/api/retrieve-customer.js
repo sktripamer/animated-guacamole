@@ -14,8 +14,9 @@ export default async function handler(req, res) {
 
     try {
       // Create a new customer
-      const customer = await stripe.customers.retrieve(
-        'cus_KmpnB2MlDD4Uaz'
+      const customer = await stripe.customers.listPaymentMethods(
+        'cus_KmpnB2MlDD4Uaz',
+        {type: 'card'}
       );
      return res.status(200).json({customer})
 
@@ -24,3 +25,4 @@ export default async function handler(req, res) {
     }
     
 }
+
