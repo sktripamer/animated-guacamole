@@ -60,7 +60,7 @@ export default function CheckoutForm() {
       // Retrieve email and username of the currently logged in user.
       // getUserFromDB() is *your* implemention of getting user info from the DB
 
-      const request = await fetch('/api/payment-intent', {
+      const request = await fetch('/api/retrieve-customer', {
         method: 'POST',
         body: 'a',
       });
