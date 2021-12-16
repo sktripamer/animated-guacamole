@@ -120,7 +120,7 @@ export default function CheckoutForm() {
   };
 
   return (
-    <form id="payment-form" onSubmit={handleSubmit}>
+    <form id="payment-form" ref={nameForm} onSubmit={handleSubmit}>
       <InputField label={'email'} name={'firstname'}/>
       <CardElement
         id="card-element"
