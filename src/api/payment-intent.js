@@ -9,7 +9,7 @@ try {
     amount: 500,
     currency: 'usd',
     customer: customerID,
-    setup_future_usage: on_session,
+    setup_future_usage: "on_session",
   });
 
   res.status(200).json({body:paymentIntent})
