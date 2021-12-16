@@ -99,7 +99,8 @@ export default function CheckoutForm() {
   const handleSubmit = async (ev) => {
     ev.preventDefault();
     setProcessing(true);
-    const intent = createIntent();
+    const intent = await createIntent();
+    console.log(intent)
     setClientSecret(intent.body.client_secret);
     const payload = await stripe.confirmCardPayment(clientSecret, {
       payment_method: {
