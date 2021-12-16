@@ -157,51 +157,7 @@ export default function CheckoutForm() {
     }
   };
 
-  const drawNoContent = async (ev) => {
-    return (
-      <div class='second-payment'>
-        second payment option
-      {/* <form id="payment-form" ref={nameForm} onSubmit={handleSubmit}>
-      <InputField label={'email'} name={'firstname'}/>
-      <CardElement
-        id="card-element"
-        options={cardStyle}
-        onChange={handleChange}
-      />
-      <button disabled={processing || disabled || succeeded} id="submit">
-        <span id="button-text">
-          {processing ? (
-            <div className="spinner" id="spinner"></div>
-          ) : (
-            "Pay now"
-          )}
-        </span>
-      </button>
-      {error && (
-        <div className="card-error" role="alert">
-          {error}
-        </div>
-      )}
-      <p className={succeeded ? "result-message" : "result-message hidden"}>
-        Payment succeeded, see the result in your
-        <a href={`https://dashboard.stripe.com/test/payments`}>
-          Stripe dashboard.
-        </a>
-        Refresh the page to pay again.
-      </p>
-    </form> */}
-        </div>
-    )
-  }
 
-  const drawYesContent = async (ev) => {
-    return (
-      <div class='payment'>
-        loaded second payment here
-        </div>
-    )
-
-  }
 
 
   return (
@@ -248,8 +204,16 @@ export default function CheckoutForm() {
       <div class='second-payment'>
       <input type="radio" name="release" checked={status === 1} onClick={(e) => radioHandler(1)} />
       <input type="radio" name="release" checked={status === 2} onClick={(e) => radioHandler(2)} />
-      {status === 1 && drawYesContent}
-      {status === 2 && drawNoContent}
+      {status === 1 && (
+              <div class='payment'>
+              loaded saved payment here
+              </div>
+      )}
+     {status === 2 && (
+              <div class='payment'>
+              loaded new payment here
+              </div>
+      )}
       {/* <form id="payment-form" ref={nameForm} onSubmit={handleSubmit}>
       <InputField label={'email'} name={'firstname'}/>
       <CardElement
