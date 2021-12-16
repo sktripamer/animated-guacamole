@@ -11,6 +11,7 @@ export default function CheckoutForm() {
   const nameForm = useRef(null);
   const [successMessage, setSuccessMessage] = useState("");
   const [showAlertBar, setShowAlertBar] = useState(true);
+  const [status, setStatus] = React.useState(0) // 0: no show, 1: show yes, 2: show no.
   const stripe = useStripe();
   const elements = useElements();
 
@@ -33,6 +34,12 @@ export default function CheckoutForm() {
   //       setClientSecret(body.body.client_secret);
   //     });
   // }, []);
+
+  const radioHandler = (status) => {
+    setStatus(status);
+  };
+
+
   async function createIntent() {
     try {
       // Retrieve email and username of the currently logged in user.
@@ -146,8 +153,56 @@ export default function CheckoutForm() {
       setError(null);
       setProcessing(false);
       setSucceeded(true);
+      setSuccessMessage("first payment complete");
     }
   };
+
+  const drawNoContent = async (ev) => {
+    return (
+      <div class='second-payment'>
+        second payment option
+      {/* <form id="payment-form" ref={nameForm} onSubmit={handleSubmit}>
+      <InputField label={'email'} name={'firstname'}/>
+      <CardElement
+        id="card-element"
+        options={cardStyle}
+        onChange={handleChange}
+      />
+      <button disabled={processing || disabled || succeeded} id="submit">
+        <span id="button-text">
+          {processing ? (
+            <div className="spinner" id="spinner"></div>
+          ) : (
+            "Pay now"
+          )}
+        </span>
+      </button>
+      {error && (
+        <div className="card-error" role="alert">
+          {error}
+        </div>
+      )}
+      <p className={succeeded ? "result-message" : "result-message hidden"}>
+        Payment succeeded, see the result in your
+        <a href={`https://dashboard.stripe.com/test/payments`}>
+          Stripe dashboard.
+        </a>
+        Refresh the page to pay again.
+      </p>
+    </form> */}
+        </div>
+    )
+  }
+
+  const drawYesContent = async (ev) => {
+    return (
+      <div class='payment'>
+        loaded second payment here
+        </div>
+    )
+
+  }
+
 
   return (
     <div class='payment'>
@@ -186,13 +241,16 @@ export default function CheckoutForm() {
             "get customer"
         </span>
       </button>
-    {/* <div class='rev-player'>
+    <div class='rev-player'>
     {"" !== successMessage
     ? showAlertBar && (
         
-
-     
-      <form id="payment-form" ref={nameForm} onSubmit={handleSubmit}>
+      <div class='second-payment'>
+      <input type="radio" name="release" checked={status === 1} onClick={(e) => radioHandler(1)} />
+      <input type="radio" name="release" checked={status === 2} onClick={(e) => radioHandler(2)} />
+      {status === 1 && drawYesContent}
+      {status === 2 && drawNoContent}
+      {/* <form id="payment-form" ref={nameForm} onSubmit={handleSubmit}>
       <InputField label={'email'} name={'firstname'}/>
       <CardElement
         id="card-element"
@@ -220,11 +278,11 @@ export default function CheckoutForm() {
         </a>
         Refresh the page to pay again.
       </p>
-    </form>
-
+    </form> */}
+        </div>
       )
     : ""}
-    </div> */}
+    </div>
     </div>
   );
 }
