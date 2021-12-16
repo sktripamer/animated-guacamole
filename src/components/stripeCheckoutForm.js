@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
+import InputField from './inputfield';
 
 export default function CheckoutForm() {
   const [succeeded, setSucceeded] = useState(false);
@@ -7,6 +8,7 @@ export default function CheckoutForm() {
   const [processing, setProcessing] = useState("");
   const [disabled, setDisabled] = useState(true);
   const [clientSecret, setClientSecret] = useState("");
+  const nameForm = useRef(null);
   const stripe = useStripe();
   const elements = useElements();
 
@@ -33,12 +35,11 @@ export default function CheckoutForm() {
     try {
       // Retrieve email and username of the currently logged in user.
       // getUserFromDB() is *your* implemention of getting user info from the DB
-
+      const form = nameForm.current
+      const email = form['firstname'].value
       const request = await fetch('/api/payment-intent', {
         method: 'POST',
-        body: JSON.stringify({
-          amount: 500,
-        }),
+        body: email,
       });
       const intent = (await request.json());
       // Update your user in DB to store the customerID
@@ -100,7 +101,7 @@ export default function CheckoutForm() {
     ev.preventDefault();
     setProcessing(true);
     const intent = await createIntent();
-    console.log(intent.body.client_secret)
+    console.log(intent)
     //setClientSecret(intent.body.client_secret);
     const payload = await stripe.confirmCardPayment(intent.body.client_secret, {
       payment_method: {
@@ -120,6 +121,7 @@ export default function CheckoutForm() {
 
   return (
     <form id="payment-form" onSubmit={handleSubmit}>
+      <InputField label={'email'} name={'firstname'}/>
       <CardElement
         id="card-element"
         options={cardStyle}
